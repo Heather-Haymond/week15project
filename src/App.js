@@ -10,6 +10,11 @@ function App() {
       .catch(error => console.error(error));
   }, []);
 
+  const handleDelete = id => {
+    setPokemon(prevPokemon => prevPokemon.filter(p => p.id !== id));
+  };
+
+
   return (
     <div>
       <h1>Favorite Pokemon</h1>
@@ -17,11 +22,7 @@ function App() {
         {pokemon.map(p => (
           <li key={p.id}>
             <strong>{p.name}</strong>
-            <ul>
-              {p.moves.map(move => (
-                <li key={move}>{move}</li>
-              ))}
-            </ul>
+            <button onClick={() => handleDelete(p.id)}>Delete</button>
           </li>
         ))}
       </ul>
@@ -30,3 +31,7 @@ function App() {
 }
 
 export default App;
+
+
+
+
