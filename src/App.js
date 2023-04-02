@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 
 function App() {
+  const [pokemon, setPokemon] = useState([]);
+//call api and waits for response in json
+  useEffect(() => {
+    fetch('https://642725c4161067a83bf6687e.mockapi.io/FavPoke')
+      .then(response => response.json())
+      .then(data => setPokemon(data))
+      .catch(error => console.error(error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Favorite Pokemon</h1>
+      <ul>
+        {pokemon.map(p => (
+          <li key={p.id}>
+            <strong>{p.name}</strong>
+            <ul>
+              {p.moves.map(move => (
+                <li key={move}>{move}</li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
